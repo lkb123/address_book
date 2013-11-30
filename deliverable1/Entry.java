@@ -1,29 +1,38 @@
 package deliverable1;
 
 /**
+ * @description The entry for the address book
  * @author Louie Kert Basay
  * @date
  * 
  */
 public class Entry {
+	Person person;
 	
-	public String fname;
-	public String lname;
-	
-	public Entry(String fname, String lname) {
-		this.fname = fname;
-		this.lname = lname;
+	/**
+	 * 
+	 * @param person The person of the entry
+	 */
+	public Entry(Person person) {
+		this.person = person;
 	}
 	
-	public Entry() {
-		this(null, null);
+	/**
+	 * 
+	 * @return the person in the entry
+	 */
+	public Person getPerson() {
+		return person;
 	}
 	
-	public void setFname(String fname) {
-		this.fname = fname;
+	/**
+	 * 
+	 * @param person to replace the old person in the entry
+	 */
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 	
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
+	
+	
 }

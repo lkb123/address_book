@@ -42,9 +42,9 @@ public class Interface extends JPanel {
 		mainFrame.setMinimumSize(new Dimension(700, 500));
 		mainFrame.setResizable(false);
 		
-		listPanel.setPreferredSize(new Dimension(500, 300));
+		listPanel.setPreferredSize(new Dimension(700, 400));
 		//listPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		buttonPanel.setPreferredSize(new Dimension(100, 100));
+		buttonPanel.setPreferredSize(new Dimension(500, 100));
 		//buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		createMenu();
@@ -53,8 +53,9 @@ public class Interface extends JPanel {
 		
 		//add(listPanel, BorderLayout.CENTER);
 		//add(buttonPanel, FlowLayout.LEFT);
-		add(listPanel, BorderLayout.CENTER);
+		add(listPanel, BorderLayout.NORTH);
 		add(buttonPanel, BorderLayout.SOUTH);
+		
 		
 		mainFrame.getContentPane().add(this);
 		//mainFrame.getContentPane().add(buttonPanel);
@@ -128,7 +129,7 @@ public class Interface extends JPanel {
 		JList<String> list = new JList<String>(entries);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
-		list.setPreferredSize(new Dimension(500, 290));
+		list.setPreferredSize(new Dimension(500, 390));
 		list.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		listPanel.add(list);
 	}
@@ -141,7 +142,6 @@ public class Interface extends JPanel {
 		buttonPanel.add(add);
 		buttonPanel.add(edit);
 		buttonPanel.add(delete);
-		//panel.setLayout(new FlowLayout());
 	}
 	
 	public static ArrayList<String> setEntries() {

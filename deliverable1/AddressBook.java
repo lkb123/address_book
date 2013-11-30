@@ -5,6 +5,6 @@ package deliverable1;
  * @date
  * 
  */
-public class AddressBookParser {
+public class AddressBook {
 
 }
