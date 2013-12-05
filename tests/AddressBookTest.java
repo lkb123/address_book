@@ -2,9 +2,11 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import deliverable1.*;
@@ -15,7 +17,12 @@ import deliverable1.*;
  * 
  */
 public class AddressBookTest {
-	AddressBook ab = new AddressBook();
+	static AddressBook ab;
+	@BeforeClass
+	public static void createAddressBook() throws IOException {
+		ab = new AddressBook();
+	}
+	
 	@Before
 	public void buildAddressBook() {
 		Address a = new Address("Barga Compound", "Iligan City", "9200");

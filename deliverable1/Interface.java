@@ -3,13 +3,12 @@ package deliverable1;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,11 +22,13 @@ import javax.swing.ListSelectionModel;
 
 public class Interface extends JPanel {
 	
+	static AddressBook a ;
 	static JFrame mainFrame = new JFrame("Untitled");
 	static JPanel listPanel = new JPanel();
 	static JPanel buttonPanel = new JPanel();
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		a = new AddressBook();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new Interface();
@@ -36,29 +37,22 @@ public class Interface extends JPanel {
 	}
 	
 	public Interface() {
-		//Dimension defSize = Toolkit.getDefaultToolkit().getScreenSize();
-		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setMinimumSize(new Dimension(700, 500));
 		mainFrame.setResizable(false);
 		
 		listPanel.setPreferredSize(new Dimension(700, 400));
-		//listPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		buttonPanel.setPreferredSize(new Dimension(500, 100));
-		//buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		createMenu();
 		createList(setEntries());
 		addButtons();
 		
-		//add(listPanel, BorderLayout.CENTER);
-		//add(buttonPanel, FlowLayout.LEFT);
 		add(listPanel, BorderLayout.NORTH);
 		add(buttonPanel, BorderLayout.SOUTH);
 		
 		
 		mainFrame.getContentPane().add(this);
-		//mainFrame.getContentPane().add(buttonPanel);
 		mainFrame.setVisible(true);
 	}
 	
@@ -116,12 +110,6 @@ public class Interface extends JPanel {
 	
 	public static void createList(ArrayList<String> entry) {
 		DefaultListModel<String> entries = new DefaultListModel<String> ();
-		//entries.addElement(new Entry("Louie Kert", "Basay"));
-		//entries.addElement(new Entry("Feliadulfo", "Basay"));
-		//entries.addElement(new Entry("Vilma", "Basay"));
-		//entries.addElement(new Entry("Wabi Dahran", "Basay"));
-		//entries.addElement(new Entry("Khristian", "Basay"));
-		//entries.addElement(new Entry("Michelle Ann", "Bation"));
 		for(String s : entry) {
 			entries.addElement(s);
 		}
@@ -146,8 +134,11 @@ public class Interface extends JPanel {
 	
 	public static ArrayList<String> setEntries() {
 		ArrayList<String> list = new ArrayList<String> ();
-		list.add("Louie");
-		list.add("Michelle");
+		ArrayList<Entry> tmp = a.getEntries();
+		for(Entry e : tmp) {
+			Person p = e.getPerson();
+			list.add(p.toString());
+		}
 		return list;
 	}
 }

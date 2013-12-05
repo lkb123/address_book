@@ -33,6 +33,4 @@ public class Entry {
 		this.person = person;
 	}
 	
-	
-	
 }
