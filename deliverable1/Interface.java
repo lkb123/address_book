@@ -105,6 +105,14 @@ public class Interface extends JPanel {
 		//sort menu
 		menu = new JMenu("Sort");
 		menu.setMnemonic(KeyEvent.VK_O);
+		
+		//Sort by name
+		item = new JMenuItem("Sort by Name");
+		menu.add(item);
+		
+		item = new JMenuItem("Sort by Zip");
+		menu.add(item);
+		
 		mbar.add(menu);
 		
 		//search menu
@@ -196,5 +204,12 @@ public class Interface extends JPanel {
 	 */
 	public static void editToList(int selectedIndex, Entry entryAt) {
 		entries.set(selectedIndex, entryAt);
+	}
+
+	/**
+	 * @param selected the index of the entry to be deleted
+	 */
+	public static void deleteToList(int selected) {
+		entries.remove(selected);
 	}
 } //end of class

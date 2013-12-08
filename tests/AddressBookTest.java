@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +16,8 @@ import deliverable1.*;
  * 
  */
 public class AddressBookTest {
-	static AddressBook ab;
-		
+	private AddressBook ab;
+	
 	@Before
 	public void initializeAddressBook() throws IOException {
 		String file = "json_files/sample_json.json";
@@ -84,4 +85,22 @@ public class AddressBookTest {
 		assertEquals(1, ab.getSize());
 	}
 	
+	@Test
+	public void sortByNameTest() {
+		ArrayList<Entry> sortBy = new ArrayList<Entry> ();
+		sortBy.add(ab.getEntryAt(1)); //Khristian
+		sortBy.add(ab.getEntryAt(0)); //Louie Kert
+		ab.sort(SortType.NAME);
+		assertEquals(sortBy, ab.getEntries());
+	}
+	
+	@Test
+	public void sortByZipTest() {
+		ArrayList<Entry> sortBy = new ArrayList<Entry> ();
+		sortBy.add(ab.getEntryAt(0)); //9100
+		sortBy.add(ab.getEntryAt(1)); //9200
+		ab.sort(SortType.ZIP);
+		assertEquals(sortBy, ab.getEntries());
+	}
+
 } //end of class
