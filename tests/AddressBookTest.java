@@ -3,10 +3,8 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import deliverable1.*;
@@ -18,24 +16,17 @@ import deliverable1.*;
  */
 public class AddressBookTest {
 	static AddressBook ab;
-	@BeforeClass
-	public static void createAddressBook() throws IOException {
-		ab = new AddressBook();
+		
+	@Before
+	public void initializeAddressBook() throws IOException {
+		String file = "json_files/sample_json.json";
+		ab = new AddressBook(file);
 	}
 	
-	@Before
-	public void buildAddressBook() {
-		Address a = new Address("Barga Compound", "Iligan City", "9200");
-		Phone ph = new Phone("09268940965");
-		Person pe = new Person("Louie Kert", "Basay", a, ph);
-		Entry e = new Entry(pe);
-		ab.addAPerson(e);
-		
-		a = new Address("Gensaville Subdivision", "General Santos City", "9500");
-		ph = new Phone("09323001683");
-		pe = new Person("Khristian", "Basay", a, ph);
-		e = new Entry(pe);
-		ab.addAPerson(e);
+	@Test
+	public void getABSizeTest() {
+		int size = ab.getSize();
+		assertEquals(2, size);
 	}
 	
 	@Test
@@ -44,9 +35,9 @@ public class AddressBookTest {
 		Phone ph = new Phone("09263630986");
 		Person pe = new Person("Michelle Ann", "Bation", a, ph);
 		Entry e = new Entry(pe);
-		ab.addAPerson(e);
-		ArrayList<Entry> ae = ab.getEntries();
-		assertSame("The person not successfully added", pe, ae.get(2).getPerson());
+		ab.addPerson(e);
+		Entry tmp = ab.getEntryAt(2);
+		assertEquals(e, tmp);
 	}
 	
 	@Test
@@ -55,37 +46,42 @@ public class AddressBookTest {
 		Phone ph = new Phone("09053107295");
 		Person pe = new Person("Vilma", "Basay", a, ph);
 		Entry e = new Entry(pe);
-		ab.editAPerson(1, e);
-		ArrayList<Entry> ae = ab.getEntries();
-		assertSame("The person not successfully edited", pe, ae.get(1).getPerson());
+		ab.editAPerson(0, e);
+		Entry tmp = ab.getEntryAt(0);
+		assertEquals(e, tmp);
 	}
 	
 	@Test
-	public void editPersonFailTest() {
-		ArrayList<Entry> ae = ab.getEntries();
-		Person p = ae.get(0).getPerson();	//Louie
+	public void editPersonMustFailTest() {
 		Address a = new Address("Gensanville Subdivision", "General Santos City", "9500");
 		Phone ph = new Phone("09053107295");
 		Person pe = new Person("Vilma", "Basay", a, ph);
 		Entry e = new Entry(pe);
 		ab.editAPerson(0, e);
-		assertNotSame(p, ae.get(1).getPerson());
+		Entry tmp = ab.getEntryAt(1);
+		assertNotEquals(e, tmp);
 	}
 	
 	@Test
 	public void deletePersonTest() {
-		ArrayList<Entry> ae = ab.getEntries();
-		Person p = ae.get(1).getPerson();
-		ab.deleteAPerson(0);
-		Person pe = ae.get(0).getPerson();
-		assertSame(p, pe);
+		Entry e = ab.getEntryAt(0);
+		ab.deletePerson(0);
+		Entry tmp = ab.getEntryAt(0);
+		assertNotEquals(e, tmp);
+	}
+	
+	@Test
+	public void deletePersonMustEqualTest() {
+		Entry e = ab.getEntryAt(1);
+		ab.deletePerson(0);
+		Entry tmp = ab.getEntryAt(0);
+		assertEquals(e, tmp);
 	}
 	
 	@Test
 	public void deletePersonSizeTest() {
-		ab.deleteAPerson(0);
-		ArrayList<Entry> ae = ab.getEntries();
-		assertEquals(1, ae.size());
+		ab.deletePerson(0);
+		assertEquals(1, ab.getSize());
 	}
-
+	
 } //end of class

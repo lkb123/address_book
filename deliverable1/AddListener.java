@@ -129,8 +129,9 @@ public class AddListener implements ActionListener {
 					Phone ph = new Phone(nPhone);
 					Person pe = new Person(nFname, nLname, addr, ph);
 					Entry e = new Entry(pe);
-					a.addAPerson(e);
-					Interface.addToList(e.getPerson().toString());
+					a.addPerson(e);
+					Interface.addToList(a.getEntryAt(a.getSize() - 1).getPerson().toString());
+					//Interface.addToList(a.getEntries().get(a.size() - 1).getPerson().toString());
 					d.dispose();
 					
 				}

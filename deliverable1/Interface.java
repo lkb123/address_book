@@ -29,7 +29,9 @@ public class Interface extends JPanel {
 	static DefaultListModel<String> entries;
 	
 	public static void main(String[] args) throws IOException {
-		a = new AddressBook();
+		String file = "json_files/sample_json.json";
+		a = new AddressBook(file);
+		//a = new AddressBook();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new Interface();
