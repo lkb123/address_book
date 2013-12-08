@@ -24,6 +24,9 @@ public class EditListener implements ActionListener {
 	private JButton ok, cancel;
 	private JDialog d;
 	private JTextField addr, city, zip, phone;
+	private int selectedIndex;
+	private AddressBook a;
+	private Person p;
 	
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
@@ -31,7 +34,11 @@ public class EditListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		JFrame f = Interface.getMainFrame();
-		d = new JDialog(f, "Edit Person");
+		selectedIndex = Interface.getSelectedIndex();
+		a = Interface.getAddressBook();
+		p = a.getEntryAt(selectedIndex).getPerson();
+		String name = p.getFname() + " " + p.getLname();
+		d = new JDialog(f, name);
 		d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		d.setPreferredSize(new Dimension(730, 250));
 		
@@ -39,7 +46,7 @@ public class EditListener implements ActionListener {
 		buttonPanel = new JPanel();
 		formPanel.setPreferredSize(new Dimension(290, 160));
 		buttonPanel.setPreferredSize(new Dimension(290, 50));
-		
+
 		setForms();
 		setButtons();
 		
@@ -74,6 +81,7 @@ public class EditListener implements ActionListener {
 		
 		//address
 		addr = new JTextField(SIZE + 1);
+		addr.setText(p.getAddress().getAddress());
 		l = new JLabel("Address: ");
 		l.setLabelFor(addr);
 		formPanel.add(l);
@@ -81,6 +89,7 @@ public class EditListener implements ActionListener {
 		
 		//city
 		city = new JTextField(SIZE + 4);
+		city.setText(p.getAddress().getCity());
 		l = new JLabel("City: ");
 		l.setLabelFor(city);
 		formPanel.add(l);
@@ -88,6 +97,7 @@ public class EditListener implements ActionListener {
 		
 		//zip
 		zip = new JTextField(SIZE + 4);
+		zip.setText(p.getAddress().getZip());
 		l = new JLabel("Zip: ");
 		l.setLabelFor(zip);
 		formPanel.add(l);
@@ -95,6 +105,7 @@ public class EditListener implements ActionListener {
 		
 		//phone
 		phone = new JTextField(SIZE);
+		phone.setText(p.getPhone().getNumber());
 		l = new JLabel("Phone: ");
 		l.setLabelFor(phone);
 		formPanel.add(l);
@@ -109,7 +120,17 @@ public class EditListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(arg0.getSource() == ok) {
+				String nAdd = addr.getText();
+				String nCity = city.getText();
+				String nZip = zip.getText();
+				String nPhone = phone.getText();
 				
+				Phone ph = new Phone(nPhone);
+				Address addrEntry = new Address(nAdd, nCity, nZip);
+				Entry e = new Entry(new Person(p.getFname(), p.getLname(), addrEntry, ph));
+				a.editPerson(selectedIndex, e);
+				Interface.editToList(selectedIndex, a.getEntryAt(selectedIndex));
+				d.dispose();
 			}
 			else {
 				d.dispose();

@@ -46,7 +46,7 @@ public class AddressBookTest {
 		Phone ph = new Phone("09053107295");
 		Person pe = new Person("Vilma", "Basay", a, ph);
 		Entry e = new Entry(pe);
-		ab.editAPerson(0, e);
+		ab.editPerson(0, e);
 		Entry tmp = ab.getEntryAt(0);
 		assertEquals(e, tmp);
 	}
@@ -57,7 +57,7 @@ public class AddressBookTest {
 		Phone ph = new Phone("09053107295");
 		Person pe = new Person("Vilma", "Basay", a, ph);
 		Entry e = new Entry(pe);
-		ab.editAPerson(0, e);
+		ab.editPerson(0, e);
 		Entry tmp = ab.getEntryAt(1);
 		assertNotEquals(e, tmp);
 	}

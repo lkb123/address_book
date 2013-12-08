@@ -33,4 +33,8 @@ public class Entry {
 		this.person = person;
 	}
 	
+	@Override
+	public String toString() {
+		return person.toString();
+	}
 }

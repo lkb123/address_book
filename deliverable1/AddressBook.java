@@ -76,7 +76,7 @@ public final class AddressBook {
 	 * @param i
 	 * @param e
 	 */
-	public void editAPerson(int i, Entry e) {
+	public void editPerson(int i, Entry e) {
 		entries.set(i, e);
 	}
 

@@ -26,7 +26,8 @@ public class Interface extends JPanel {
 	static JFrame mainFrame = new JFrame("Untitled");
 	static JPanel listPanel = new JPanel();
 	static JPanel buttonPanel = new JPanel();
-	static DefaultListModel<String> entries;
+	static DefaultListModel<Entry> entries;
+	static JList<Entry> list;
 	
 	public static void main(String[] args) throws IOException {
 		String file = "json_files/sample_json.json";
@@ -118,13 +119,13 @@ public class Interface extends JPanel {
 	 * creates the list
 	 * @param entry the values for the list
 	 */
-	public static void createList(ArrayList<String> entry) {
-		entries = new DefaultListModel<String> ();
-		for(String s : entry) {
+	public static void createList(ArrayList<Entry> entry) {
+		entries = new DefaultListModel<Entry> ();
+		for(Entry s : entry) {
 			entries.addElement(s);
 		}
 		
-		JList<String> list = new JList<String>(entries);
+		list = new JList<Entry>(entries);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setPreferredSize(new Dimension(500, 390));
@@ -141,6 +142,7 @@ public class Interface extends JPanel {
 		JButton edit = new JButton("Edit");
 		edit.addActionListener(new EditListener());
 		JButton delete = new JButton("Delete");
+		delete.addActionListener(new DeleteListener());
 		
 		buttonPanel.add(add);
 		buttonPanel.add(edit);
@@ -149,24 +151,26 @@ public class Interface extends JPanel {
 	
 	/**
 	 * set the entries for the list
-	 * @return the String value of the person entry
+	 * @return the the entries in the address book
 	 */
-	public static ArrayList<String> setEntries() {
-		ArrayList<String> list = new ArrayList<String> ();
-		ArrayList<Entry> tmp = a.getEntries();
-		for(Entry e : tmp) {
-			Person p = e.getPerson();
-			list.add(p.toString());
-		}
-		return list;
+	public static ArrayList<Entry> setEntries() {
+		return a.getEntries();
 	}
 	
 	/**
 	 * Adds a new person to the list
 	 * @param value the String value of the person to be added
 	 */
-	public static void addToList(String value) {
+	public static void addToList(Entry value) {
 		entries.addElement(value);
+	}
+	
+	/**
+	 * 
+	 * @return the selected index of the list
+	 */
+	public static int getSelectedIndex() {
+		return list.getSelectedIndex();
 	}
 	
 	/**
@@ -183,5 +187,14 @@ public class Interface extends JPanel {
 	 */
 	public static AddressBook getAddressBook() {
 		return a;
+	}
+
+	/**
+	 * Edits the list model to be reflected to the list
+	 * @param selectedIndex the index of the person to be edited
+	 * @param entryAt the new entry
+	 */
+	public static void editToList(int selectedIndex, Entry entryAt) {
+		entries.set(selectedIndex, entryAt);
 	}
 } //end of class
