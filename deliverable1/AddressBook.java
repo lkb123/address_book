@@ -11,7 +11,7 @@ import javax.json.JsonArray;
  * @date 12-1-13
  * 
  */
-public class AddressBook {
+public final class AddressBook {
 	private ArrayList<Entry> entries = new ArrayList<Entry> ();
 	
 	public AddressBook() throws IOException {
@@ -27,7 +27,7 @@ public class AddressBook {
 			String phone = p.getEntryInfo(i, "phone");
 			Address a = new Address(address, city, zip);
 			Phone ph = new Phone(phone);
-			Person pe = new Person(lname, fname, a, ph);
+			Person pe = new Person(fname, lname, a, ph);
 			Entry e = new Entry(pe);
 			entries.add(e);
 		}

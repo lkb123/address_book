@@ -26,6 +26,7 @@ public class Interface extends JPanel {
 	static JFrame mainFrame = new JFrame("Untitled");
 	static JPanel listPanel = new JPanel();
 	static JPanel buttonPanel = new JPanel();
+	static DefaultListModel<String> entries;
 	
 	public static void main(String[] args) throws IOException {
 		a = new AddressBook();
@@ -56,6 +57,9 @@ public class Interface extends JPanel {
 		mainFrame.setVisible(true);
 	}
 	
+	/**
+	 * sets the menu button of the interface
+	 */
 	public static void createMenu() {
 		JMenuBar mbar = new JMenuBar();
 		JMenu menu;
@@ -108,8 +112,12 @@ public class Interface extends JPanel {
 		mainFrame.setJMenuBar(mbar);
 	}
 	
+	/**
+	 * creates the list
+	 * @param entry the values for the list
+	 */
 	public static void createList(ArrayList<String> entry) {
-		DefaultListModel<String> entries = new DefaultListModel<String> ();
+		entries = new DefaultListModel<String> ();
 		for(String s : entry) {
 			entries.addElement(s);
 		}
@@ -122,9 +130,14 @@ public class Interface extends JPanel {
 		listPanel.add(list);
 	}
 	
+	/**
+	 * Add buttons to the interface
+	 */
 	public static void addButtons() {
 		JButton add = new JButton("Add");
+		add.addActionListener(new AddListener());
 		JButton edit = new JButton("Edit");
+		edit.addActionListener(new EditListener());
 		JButton delete = new JButton("Delete");
 		
 		buttonPanel.add(add);
@@ -132,6 +145,10 @@ public class Interface extends JPanel {
 		buttonPanel.add(delete);
 	}
 	
+	/**
+	 * set the entries for the list
+	 * @return the String value of the person entry
+	 */
 	public static ArrayList<String> setEntries() {
 		ArrayList<String> list = new ArrayList<String> ();
 		ArrayList<Entry> tmp = a.getEntries();
@@ -141,4 +158,28 @@ public class Interface extends JPanel {
 		}
 		return list;
 	}
-}
+	
+	/**
+	 * Adds a new person to the list
+	 * @param value the String value of the person to be added
+	 */
+	public static void addToList(String value) {
+		entries.addElement(value);
+	}
+	
+	/**
+	 * Get the main frame of the address book
+	 * @return the main frame of the interface
+	 */
+	public static JFrame getMainFrame() {
+		return mainFrame;
+	}
+	
+	/**
+	 * Get the address book
+	 * @return the address book
+	 */
+	public static AddressBook getAddressBook() {
+		return a;
+	}
+} //end of class

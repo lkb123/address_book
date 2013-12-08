@@ -17,7 +17,7 @@ import javax.json.JsonReader;
  */
 public class Parser {
 	
-	JsonObject jobj;
+	private JsonObject jobj;
 	
 	/**
 	 * @param jSON_PATH the path to the json file

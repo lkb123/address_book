@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  * @date
  * 
  */
-public class QuitListener implements ActionListener {
+public final class QuitListener implements ActionListener {
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

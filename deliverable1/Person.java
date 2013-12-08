@@ -8,10 +8,10 @@ package deliverable1;
  * 
  */
 public class Person {
-	String fname;
-	String lname;
-	Address address;
-	Phone phone;
+	private String fname;
+	private String lname;
+	private Address address;
+	private Phone phone;
 	
 	/**
 	 * 
@@ -78,22 +78,6 @@ public class Person {
 	
 	/**
 	 * 
-	 * @param fname person's new first name
-	 */
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-	
-	/**
-	 * 
-	 * @param lname person's new last name
-	 */
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
-	
-	/**
-	 * 
 	 * @param addr person's new address
 	 */
 	public void setAddress(Address addr) {
@@ -111,8 +95,8 @@ public class Person {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(lname + ", ");
-		sb.append(fname + "         ");
+		sb.append(fname + " ");
+		sb.append(lname + "         ");
 		sb.append(address);
 		sb.append(phone);
 		return sb.toString();

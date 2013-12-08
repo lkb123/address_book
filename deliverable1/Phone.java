@@ -7,7 +7,7 @@ package deliverable1;
  * 
  */
 public class Phone {
-	String number;
+	private String number;
 	
 	/**
 	 * 

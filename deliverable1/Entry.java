@@ -7,7 +7,7 @@ package deliverable1;
  * 
  */
 public class Entry {
-	Person person;
+	private Person person;
 	
 	/**
 	 * 

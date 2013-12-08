@@ -7,9 +7,9 @@ package deliverable1;
  * 
  */
 public class Address {
-	String address;
-	String city;
-	String zip;
+	private String address;
+	private String city;
+	private String zip;
 	
 	/**
 	 * 
@@ -45,30 +45,6 @@ public class Address {
 	 */
 	public String getZip() {
 		return zip;
-	}
-	
-	/**
-	 * 
-	 * @param address new address
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	/**
-	 * 
-	 * @param city new city
-	 */
-	public void setCity(String city) {
-		this.city = city;
-	}
-	
-	/**
-	 * 
-	 * @param zip new zip code
-	 */
-	public void setZip(String zip) {
-		this.zip = zip;
 	}
 	
 	@Override
