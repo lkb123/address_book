@@ -1,9 +1,9 @@
 package deliverable1;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.json.JsonArray;
+import javax.swing.DefaultListModel;
 
 /**
  * @description The address book
@@ -14,12 +14,9 @@ import javax.json.JsonArray;
 public final class AddressBook {
 	
 	private Parser p;
-	private ArrayList<Entry> entries = new ArrayList<Entry> ();
-	private SortType s;
+	private DefaultListModel<Entry> entries = new DefaultListModel<Entry> ();
 	
-	public AddressBook() {
-		
-	}
+	public AddressBook() { }
 	
 	/**
 	 * @param file the json file
@@ -46,7 +43,7 @@ public final class AddressBook {
 			Phone p = new Phone(phone);
 			
 			Entry e = new Entry(new Person(fname, lname, a, p));
-			entries.add(e);
+			entries.addElement(e);
 		}
 	}
 
@@ -54,7 +51,7 @@ public final class AddressBook {
 	 * @param e the new entry
 	 */
 	public void addPerson(Entry e) {
-		entries.add(e);
+		entries.addElement(e);
 	}
 
 	/**
@@ -92,92 +89,62 @@ public final class AddressBook {
 	 * 
 	 * @return array of entries of the address book
 	 */
-	public ArrayList<Entry> getEntries() {
+	public DefaultListModel<Entry> getEntries() {
 		return entries;
 	}
 
 	/**
-	 * @param name sort by this name(valid values are NAME and ZIP only)
+	 * @param name sort by this type -- NAME or ZIP
 	 */
 	public void sort(SortType name) {
-		int n = entries.size() - 1;
-		this.s = name;
-		this.quickSort(0, n);
-	}
-
-	/**
-	 * @param i first index
-	 * @param n last index
-	 */
-	private void quickSort(int i, int n) {
-		switch(this.s) {
+		switch(name) {
 		case NAME:
-			if(i < n) {
-				int j = partitionByName(i, n);
-				quickSort(i, j - 1);
-				quickSort(j + 1, n);
-			}
+			insertionSortByName();
 			break;
 		case ZIP:
-			if(i < n) {
-				int j = partitionByZip(i, n);
-				quickSort(i, j - 1);
-				quickSort(j + 1, n);
-			}
+			insertionSortByZip();
 			break;
 		}
+		
 	}
 
 	/**
-	 *@param i first index
-	 * @param n last index
-	 * @return the partition index
+	 * Sorts the entries by zip number
 	 */
-	private int partitionByZip(int i, int n) {
-		int pivot = Integer.parseInt(entries.get(i).getPerson().getAddress().getZip());
-		int a = i + 1;
-		for(int j = i + 1; j < n; j++) {
-			int zip = Integer.parseInt(entries.get(j).getPerson().getAddress().getZip());
-			if(zip <= pivot) {
-				a = a + 1;
-				swap(a, j);
+	private void insertionSortByZip() {
+		for(int j = 1; j < entries.size(); j++) {
+			Entry key = entries.get(j);
+			int zip = Integer.parseInt(key.getPerson().getAddress().getZip());
+			int i = j - 1;
+			int tmp = Integer.parseInt(entries.get(i).getPerson().getAddress().getZip());
+			while(i >= 0 && tmp > zip) {
+				entries.set(i + 1, entries.get(i));
+				i = i - 1;
 			}
-		}
-		swap(i, a);
-		return a;
+			entries.set(i + 1, key);
+		} 
+		
 	}
 
 	/**
-	 * @param i first index
-	 * @param n last index
-	 * @return the partition index
+	 * Sorts the entries by name
 	 */
-	private int partitionByName(int i, int n) {
-		String fname = entries.get(i).getPerson().getFname();
-		String lname = entries.get(i).getPerson().getLname();
-		String pivot = fname + " " + lname;
-		int a = i + 1;
-		for(int j = i + 1; j < n; j++) {
-			String innerFname = entries.get(j).getPerson().getFname();
-			String innerLname = entries.get(j).getPerson().getLname();
-			String name = innerFname + " " + innerLname;
-			if(name.compareTo(pivot) <= 0) {
-				a = a + 1;
-				swap(a, j);
+	private void insertionSortByName() {
+		for(int j = 1; j < entries.size(); j++) {
+			Entry key = entries.get(j);
+			String name = key.getPerson().getFname() + " " + key.getPerson().getLname();
+			int i = j - 1;
+			String cfname = entries.get(i).getPerson().getFname();
+			String clname = entries.get(i).getPerson().getLname();
+			String cname = cfname + " " + clname;
+			while(i >= 0 && cname.compareTo(name) > 0) {
+				entries.set(i + 1, entries.get(i));
+				i = i - 1;
 			}
+			entries.set(i + 1, key);
 		}
-		swap(i, a);
-		return a;
+		
 	}
 
-	/**
-	 * @param a the left index
-	 * @param j the right index
-	 */
-	private void swap(int a, int j) {
-		Entry tmp = entries.get(a);
-		entries.set(a, entries.get(j));
-		entries.set(j, tmp);
-	}
 	
 } //end of class

@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -20,18 +19,21 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
+@SuppressWarnings("serial")
 public class Interface extends JPanel {
 	
-	static AddressBook a ;
+	static AddressBook a;
 	static JFrame mainFrame = new JFrame("Untitled");
 	static JPanel listPanel = new JPanel();
 	static JPanel buttonPanel = new JPanel();
 	static DefaultListModel<Entry> entries;
 	static JList<Entry> list;
+	static JMenuItem sortName, sortZip;
 	
 	public static void main(String[] args) throws IOException {
 		String file = "json_files/sample_json.json";
 		a = new AddressBook(file);
+		entries = a.getEntries();
 		//a = new AddressBook();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -49,7 +51,7 @@ public class Interface extends JPanel {
 		buttonPanel.setPreferredSize(new Dimension(500, 100));
 		
 		createMenu();
-		createList(setEntries());
+		createList();
 		addButtons();
 		
 		add(listPanel, BorderLayout.NORTH);
@@ -108,9 +110,13 @@ public class Interface extends JPanel {
 		
 		//Sort by name
 		item = new JMenuItem("Sort by Name");
+		item.setActionCommand("Sort by Name");
+		item.addActionListener(new SortListener());
 		menu.add(item);
 		
 		item = new JMenuItem("Sort by Zip");
+		item.setActionCommand("Sort by Zip");
+		item.addActionListener(new SortListener());
 		menu.add(item);
 		
 		mbar.add(menu);
@@ -127,12 +133,7 @@ public class Interface extends JPanel {
 	 * creates the list
 	 * @param entry the values for the list
 	 */
-	public static void createList(ArrayList<Entry> entry) {
-		entries = new DefaultListModel<Entry> ();
-		for(Entry s : entry) {
-			entries.addElement(s);
-		}
-		
+	public static void createList() {
 		list = new JList<Entry>(entries);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
@@ -155,22 +156,6 @@ public class Interface extends JPanel {
 		buttonPanel.add(add);
 		buttonPanel.add(edit);
 		buttonPanel.add(delete);
-	}
-	
-	/**
-	 * set the entries for the list
-	 * @return the the entries in the address book
-	 */
-	public static ArrayList<Entry> setEntries() {
-		return a.getEntries();
-	}
-	
-	/**
-	 * Adds a new person to the list
-	 * @param value the String value of the person to be added
-	 */
-	public static void addToList(Entry value) {
-		entries.addElement(value);
 	}
 	
 	/**

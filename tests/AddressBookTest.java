@@ -3,7 +3,8 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -87,20 +88,22 @@ public class AddressBookTest {
 	
 	@Test
 	public void sortByNameTest() {
-		ArrayList<Entry> sortBy = new ArrayList<Entry> ();
-		sortBy.add(ab.getEntryAt(1)); //Khristian
-		sortBy.add(ab.getEntryAt(0)); //Louie Kert
+		DefaultListModel<Entry> e = new DefaultListModel<Entry> ();
+		e.addElement(ab.getEntryAt(1));	//Khristian
+		e.addElement(ab.getEntryAt(0)); //Louie
 		ab.sort(SortType.NAME);
-		assertEquals(sortBy, ab.getEntries());
+		assertEquals(e.get(0), ab.getEntryAt(0));
+		assertEquals(e.get(1), ab.getEntryAt(1));
 	}
 	
 	@Test
 	public void sortByZipTest() {
-		ArrayList<Entry> sortBy = new ArrayList<Entry> ();
-		sortBy.add(ab.getEntryAt(0)); //9100
-		sortBy.add(ab.getEntryAt(1)); //9200
+		DefaultListModel<Entry> e = new DefaultListModel<Entry> ();
+		e.addElement(ab.getEntryAt(0)); //9100
+		e.addElement(ab.getEntryAt(1)); //9200
 		ab.sort(SortType.ZIP);
-		assertEquals(sortBy, ab.getEntries());
+		assertEquals(e.get(0), ab.getEntryAt(0));
+		assertEquals(e.get(1), ab.getEntryAt(1));
 	}
-
+	
 } //end of class

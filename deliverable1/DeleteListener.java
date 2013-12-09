@@ -22,7 +22,6 @@ public class DeleteListener implements ActionListener {
 			AddressBook a = Interface.getAddressBook();
 			int selected = Interface.getSelectedIndex();
 			a.deletePerson(selected);
-			Interface.deleteToList(selected);
 		}
 	}
 

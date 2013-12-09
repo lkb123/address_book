@@ -129,7 +129,6 @@ public class EditListener implements ActionListener {
 				Address addrEntry = new Address(nAdd, nCity, nZip);
 				Entry e = new Entry(new Person(p.getFname(), p.getLname(), addrEntry, ph));
 				a.editPerson(selectedIndex, e);
-				Interface.editToList(selectedIndex, a.getEntryAt(selectedIndex));
 				d.dispose();
 			}
 			else {
