@@ -85,10 +85,12 @@ public class Interface extends JPanel {
 		//Save
 		item = new JMenuItem("Save", KeyEvent.VK_S);
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		item.setEnabled(false);
 		menu.add(item);
 		//Save As
 		item = new JMenuItem("Save As", KeyEvent.VK_A);
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+		item.setEnabled(false);
 		menu.add(item);
 		//-----------------------------
 		menu.addSeparator();
@@ -124,6 +126,15 @@ public class Interface extends JPanel {
 		//search menu
 		menu = new JMenu("Search");
 		menu.setMnemonic(KeyEvent.VK_E);
+		//find
+		item = new JMenuItem("Find");
+		item.addActionListener(new FindListener());
+		menu.add(item);
+		//find again
+		item = new JMenuItem("Find Again");
+		item.setEnabled(false);
+		menu.add(item);
+		
 		mbar.add(menu);
 		
 		mainFrame.setJMenuBar(mbar);
@@ -181,20 +192,5 @@ public class Interface extends JPanel {
 	public static AddressBook getAddressBook() {
 		return a;
 	}
-
-	/**
-	 * Edits the list model to be reflected to the list
-	 * @param selectedIndex the index of the person to be edited
-	 * @param entryAt the new entry
-	 */
-	public static void editToList(int selectedIndex, Entry entryAt) {
-		entries.set(selectedIndex, entryAt);
-	}
-
-	/**
-	 * @param selected the index of the entry to be deleted
-	 */
-	public static void deleteToList(int selected) {
-		entries.remove(selected);
-	}
+	
 } //end of class
