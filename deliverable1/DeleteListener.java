@@ -2,6 +2,7 @@ package deliverable1;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -16,12 +17,18 @@ public class DeleteListener implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		String s = "Are you sure you want to delete this entry?";
-		int choice = JOptionPane.showConfirmDialog(null, s, s, JOptionPane.YES_NO_OPTION);
-		if(choice == JOptionPane.YES_OPTION) {
-			AddressBook a = Interface.getAddressBook();
-			int selected = Interface.getSelectedIndex();
-			a.deletePerson(selected);
+		if(Interface.getSelectedIndex() == -1) {
+			System.out.println("No user to be deleted");
+		}
+		else {
+			String s = "Are you sure you want to delete this entry?";
+			int choice = JOptionPane.showConfirmDialog(null, s, s, JOptionPane.YES_NO_OPTION);
+			if(choice == JOptionPane.YES_OPTION) {
+				AddressBook a = Interface.getAddressBook();
+				int selected = Interface.getSelectedIndex();
+				a.deletePerson(selected);
+				Interface.getSave().setEnabled(true);
+			}
 		}
 	}
 

@@ -23,26 +23,38 @@ import javax.swing.ListSelectionModel;
 public class Interface extends JPanel {
 	
 	static AddressBook a;
-	static JFrame mainFrame = new JFrame("Untitled");
+	static JFrame mainFrame = new JFrame();
 	static JPanel listPanel = new JPanel();
 	static JPanel buttonPanel = new JPanel();
 	static DefaultListModel<Entry> entries;
 	static JList<Entry> list;
-	static JMenuItem sortName, sortZip;
+	static JMenuItem findNext, save;
+	static String file = null;
 	
 	public static void main(String[] args) throws IOException {
-		String file = "json_files/sample_json.json";
-		a = new AddressBook(file);
-		entries = a.getEntries();
-		//a = new AddressBook();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new Interface();
+				try {
+					new Interface();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
 	
-	public Interface() {
+	public Interface() throws IOException {
+		file = "json_files/sample_json.json";
+		if(file != null) {
+			mainFrame.setTitle(file);
+			a = new AddressBook(file);
+		}
+		else {
+			mainFrame.setTitle("Untitled");
+			a = new AddressBook();
+		}
+		entries = a.getEntries();
+		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setMinimumSize(new Dimension(700, 500));
 		mainFrame.setResizable(false);
@@ -76,21 +88,25 @@ public class Interface extends JPanel {
 		
 		//new
 		item = new JMenuItem("New", KeyEvent.VK_N);
+		item.addActionListener(new NewListener());
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		menu.add(item);
 		//open
 		item = new JMenuItem("Open", KeyEvent.VK_O);
+		item.addActionListener(new OpenListener());
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		menu.add(item);
 		//Save
-		item = new JMenuItem("Save", KeyEvent.VK_S);
-		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-		item.setEnabled(false);
-		menu.add(item);
+		save = new JMenuItem("Save", KeyEvent.VK_S);
+		save.addActionListener(new SaveListener());
+		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		if(mainFrame.getTitle().equals("Untitled"))	save.setEnabled(true);
+		else	save.setEnabled(false);
+		menu.add(save);
 		//Save As
 		item = new JMenuItem("Save As", KeyEvent.VK_A);
+		item.addActionListener(new SaveAsListener());
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
-		item.setEnabled(false);
 		menu.add(item);
 		//-----------------------------
 		menu.addSeparator();
@@ -131,9 +147,10 @@ public class Interface extends JPanel {
 		item.addActionListener(new FindListener());
 		menu.add(item);
 		//find again
-		item = new JMenuItem("Find Again");
-		item.setEnabled(false);
-		menu.add(item);
+		findNext = new JMenuItem("Find Again");
+		findNext.addActionListener(new FindIteratorListener());
+		findNext.setEnabled(false);
+		menu.add(findNext);
 		
 		mbar.add(menu);
 		
@@ -170,7 +187,7 @@ public class Interface extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Get the currently selected index of the JList
 	 * @return the selected index of the list
 	 */
 	public static int getSelectedIndex() {
@@ -193,4 +210,41 @@ public class Interface extends JPanel {
 		return a;
 	}
 	
+	/**
+	 * Gets the instance list of the address book
+	 * @return the list of the address book
+	 */
+	public static JList<Entry> getList() {
+		return list;
+	}
+	
+	/**
+	 * Gets the instance of the findNext JMenuItem located in the Search Menu of the Interface
+	 * @return the findNext menu item
+	 */
+	public static JMenuItem getFindNext() {
+		return findNext;
+	}
+	
+	/**
+	 * Gets the instance of the save JMenuItem located in the File Menu of the Interface
+	 * @return the save menu item
+	 * @return
+	 */
+	public static JMenuItem getSave() {
+		return save;
+	}
+	
+	/**
+	 * Replaces the old file with a new file
+	 * @param aFile the new file
+	 */
+	public static void setFile(String aFile) {
+		file = aFile;
+	}
+	
+	public Interface getInstance() {
+		return this;
+	}
+
 } //end of class

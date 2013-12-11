@@ -22,6 +22,7 @@ public class SortListener implements ActionListener {
 		else {
 			a.sort(SortType.ZIP);
 		}
+		Interface.getSave().setEnabled(true);
 	}
 
 }

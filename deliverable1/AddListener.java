@@ -131,6 +131,7 @@ public class AddListener implements ActionListener {
 					Entry e = new Entry(pe);
 					a.addPerson(e);
 					d.dispose();
+					Interface.getSave().setEnabled(true);
 					
 				}
 				catch (NullPointerException e) {

@@ -33,27 +33,32 @@ public class EditListener implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		JFrame f = Interface.getMainFrame();
-		selectedIndex = Interface.getSelectedIndex();
-		a = Interface.getAddressBook();
-		p = a.getEntryAt(selectedIndex).getPerson();
-		String name = p.getFname() + " " + p.getLname();
-		d = new JDialog(f, name);
-		d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		d.setPreferredSize(new Dimension(730, 250));
 		
-		formPanel = new JPanel();
-		buttonPanel = new JPanel();
-		formPanel.setPreferredSize(new Dimension(290, 160));
-		buttonPanel.setPreferredSize(new Dimension(290, 50));
-
-		setForms();
-		setButtons();
-		
-		d.getContentPane().add(formPanel, BorderLayout.NORTH);
-		d.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		d.pack();
-		d.setVisible(true);
+		try {
+			JFrame f = Interface.getMainFrame();
+			selectedIndex = Interface.getSelectedIndex();
+			a = Interface.getAddressBook();
+			p = a.getEntryAt(selectedIndex).getPerson();
+			String name = p.getFname() + " " + p.getLname();
+			d = new JDialog(f, name);
+			d.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			d.setPreferredSize(new Dimension(730, 250));
+			
+			formPanel = new JPanel();
+			buttonPanel = new JPanel();
+			formPanel.setPreferredSize(new Dimension(290, 160));
+			buttonPanel.setPreferredSize(new Dimension(290, 50));
+	
+			setForms();
+			setButtons();
+			
+			d.getContentPane().add(formPanel, BorderLayout.NORTH);
+			d.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+			d.pack();
+			d.setVisible(true);
+		} catch(Exception e) {
+			//alert user that no entry is selected to be edited
+		}
 	}
 	
 	/**
@@ -130,6 +135,7 @@ public class EditListener implements ActionListener {
 				Entry e = new Entry(new Person(p.getFname(), p.getLname(), addrEntry, ph));
 				a.editPerson(selectedIndex, e);
 				d.dispose();
+				Interface.getSave().setEnabled(true);
 			}
 			else {
 				d.dispose();
