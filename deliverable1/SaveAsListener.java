@@ -28,10 +28,11 @@ public class SaveAsListener implements ActionListener {
 			String file = selected.getAbsolutePath();
 			try {
 				new Writer(file + ".json");
-				//System.out.println(file);
+				f.setTitle(file);
 			} catch (FileNotFoundException e1) {
 				;
 			}
 		}
+		Interface.getSave().setEnabled(false);
 	}
 }

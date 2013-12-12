@@ -2,16 +2,13 @@ package deliverable1;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.Console;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /**
  * @author Louie Kert Basay
@@ -27,31 +24,52 @@ public class NewListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		JMenuItem save = Interface.getSave();
 		if(save.isEnabled()) {
-			//TODO
+			String s = "There are unsaved files. Want to save?";
+			int choice = JOptionPane.showConfirmDialog(null, s, s, JOptionPane.YES_NO_CANCEL_OPTION);
+			JFrame f = Interface.getMainFrame();
+			if(choice == JOptionPane.YES_OPTION) {
+				if(f.getTitle().equals("Untitled")) {
+					JFileChooser fc = new JFileChooser();
+					int returnVal = fc.showSaveDialog(f);
+					if(returnVal == JFileChooser.APPROVE_OPTION) {
+						File selected = fc.getSelectedFile();
+						String file = selected.getAbsolutePath();
+						try {
+							new Writer(file + ".json");
+							f.setTitle(file);
+						} catch (FileNotFoundException e1) {
+							;
+						}
+					}
+				}
+				else {
+					String file = f.getTitle();
+					try {
+						new Writer(file);
+					} catch (FileNotFoundException e1) {
+						;
+					}
+				}
+			}
+			else if(choice == JOptionPane.NO_OPTION) {
+				createNewAddressBook();
+			}
+			else {
+				; //do nothing
+			}
 		}
+		else {
+			createNewAddressBook();
+		}
+		save.setEnabled(true);
+	}
+
+	/**
+	 * 
+	 */
+	private void createNewAddressBook() {
+		Interface.reset();
 		
-		/*
-		Constructor<?>[] ctors = Interface.class.getDeclaredConstructors();
-		Constructor<?> ctor = ctors[0];
-		try {
-			String[] args = new String[] {};
-			Interface i = (Interface) ctor.newInstance();
-			Method m = i.getClass().getDeclaredMethod("main", String[].class);
-			m.setAccessible(true);
-			m.invoke(null, (Object) args);
-			
-		} catch (InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 	}
 
 }

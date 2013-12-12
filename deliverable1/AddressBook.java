@@ -145,6 +145,16 @@ public final class AddressBook {
 		}
 		
 	}
+	
+	public void reset() {
+		entries.clear();
+	}
+	
+	public void reload(String file) throws IOException {
+		entries.clear();
+		p = new Parser(file);
+		initialize();
+	}
 
 	
 } //end of class

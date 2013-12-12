@@ -30,11 +30,12 @@ public class SaveListener implements ActionListener {
 				file = selected.getAbsolutePath();
 				try {
 					new Writer(file);
+					f.setTitle(file);
 				} catch (FileNotFoundException e1) {
 					;
 				}
 			}
-			return;
+			
 		}
 		else {
 			file = f.getTitle();
@@ -44,6 +45,7 @@ public class SaveListener implements ActionListener {
 				;
 			}
 		}
+		Interface.getSave().setEnabled(false);
 		
 	}
 

@@ -44,7 +44,7 @@ public class Interface extends JPanel {
 	}
 	
 	public Interface() throws IOException {
-		file = "json_files/sample_json.json";
+		//file = "json_files/sample_json.json";
 		if(file != null) {
 			mainFrame.setTitle(file);
 			a = new AddressBook(file);
@@ -235,16 +235,22 @@ public class Interface extends JPanel {
 		return save;
 	}
 	
-	/**
-	 * Replaces the old file with a new file
-	 * @param aFile the new file
-	 */
-	public static void setFile(String aFile) {
-		file = aFile;
+	public static void setAddressBook(AddressBook tmp) {
+		a = tmp;
 	}
 	
-	public Interface getInstance() {
-		return this;
+	
+	public static void reset() {
+		file = null;
+		a.reset();
+		mainFrame.setTitle("Untitled");
 	}
-
+	
+	public static void reset(String newFile) throws IOException {
+		file = newFile;
+		a.reload(newFile);
+		mainFrame.setTitle(newFile);
+	}
+	
+	
 } //end of class
