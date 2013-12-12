@@ -16,8 +16,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
 public class Interface extends JPanel {
@@ -167,6 +169,11 @@ public class Interface extends JPanel {
 		list.setPreferredSize(new Dimension(500, 390));
 		list.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		listPanel.add(list);
+		
+		JScrollPane scroll = new JScrollPane(list, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//JScrollPane scroll = new JScrollPane(list);
+		scroll.setPreferredSize(new Dimension(520, 410));
+		listPanel.add(scroll);
 	}
 	
 	/**
