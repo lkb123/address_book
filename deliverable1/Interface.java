@@ -44,7 +44,6 @@ public class Interface extends JPanel {
 	}
 	
 	public Interface() throws IOException {
-		//file = "json_files/sample_json.json";
 		if(file != null) {
 			mainFrame.setTitle(file);
 			a = new AddressBook(file);
